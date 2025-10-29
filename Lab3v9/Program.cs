@@ -13,12 +13,14 @@ public class Account
         Balance = balance;
     }
 
+    // Віртуальний метод депозиту
     public virtual void Deposit(decimal amount)
     {
         Balance += amount;
         Console.WriteLine($"{Owner}: Deposit {amount:C}. New Balance: {Balance:C}");
     }
 
+    // Віртуальний метод зняття коштів
     public virtual void Withdraw(decimal amount)
     {
         if (amount <= Balance)
@@ -28,20 +30,21 @@ public class Account
         }
         else
         {
-            Console.WriteLine($"{Owner}: Withdraw {amount:C} FAILED. Not enough funds.");
+            Console.WriteLine($"{Owner}: Insufficient funds to withdraw {amount:C}.");
         }
     }
 
-    public virtual void DisplayInfo()
+    // Вивід інформації про баланс
+    public virtual void Display()
     {
         Console.WriteLine($"{Owner}: Account Balance: {Balance:C}");
     }
 }
 
-// Похідний клас CreditAccount
+// Похідний клас CreditAccount із кредитним лімітом
 public class CreditAccount : Account
 {
-    public decimal CreditLimit { get; set; }
+    public decimal CreditLimit { get; private set; }
 
     public CreditAccount(string owner, decimal balance, decimal creditLimit)
         : base(owner, balance)
@@ -49,6 +52,7 @@ public class CreditAccount : Account
         CreditLimit = creditLimit;
     }
 
+    // Перевизначення методу зняття коштів із урахуванням кредитного ліміту
     public override void Withdraw(decimal amount)
     {
         if (amount <= Balance + CreditLimit)
@@ -58,20 +62,20 @@ public class CreditAccount : Account
         }
         else
         {
-            Console.WriteLine($"{Owner}: Withdraw {amount:C} FAILED. Over credit limit.");
+            Console.WriteLine($"{Owner}: Credit limit exceeded. Cannot withdraw {amount:C}.");
         }
     }
 
-    public override void DisplayInfo()
+    public override void Display()
     {
         Console.WriteLine($"{Owner}: Credit Account Balance: {Balance:C}, Credit Limit: {CreditLimit:C}");
     }
 }
 
-// Похідний клас SavingsAccount
+// Похідний клас SavingsAccount із процентною ставкою
 public class SavingsAccount : Account
 {
-    public decimal InterestRate { get; set; }
+    public decimal InterestRate { get; private set; } // у відсотках
 
     public SavingsAccount(string owner, decimal balance, decimal interestRate)
         : base(owner, balance)
@@ -79,40 +83,63 @@ public class SavingsAccount : Account
         InterestRate = interestRate;
     }
 
+    // Метод нарахування відсотків
     public void ApplyInterest()
     {
-        decimal interest = Balance * InterestRate;
+        decimal interest = Balance * InterestRate / 100;
         Balance += interest;
         Console.WriteLine($"{Owner}: Interest {interest:C} applied. New Balance: {Balance:C}");
     }
 
-    public override void DisplayInfo()
+    public override void Display()
     {
-        Console.WriteLine($"{Owner}: Savings Account Balance: {Balance:C}, Interest Rate: {InterestRate:P}");
+        Console.WriteLine($"{Owner}: Savings Account Balance: {Balance:C}, Interest Rate: {InterestRate:F2}%");
     }
 }
 
+// Головна програма
 class Program
 {
-    static void Main(string[] args)
+    static void Main()
     {
+        // Створюємо список рахунків різних типів
         List<Account> accounts = new List<Account>
         {
-            new CreditAccount("Ivan", 500, 200),
-            new SavingsAccount("Olena", 1000, 0.05m),
-            new Account("Petro", 300)
+            new CreditAccount("Ivan", 500m, 200m),
+            new SavingsAccount("Olena", 1000m, 5m),
+            new Account("Petro", 300m)
         };
 
-        foreach (var acc in accounts)
+        // Виводимо початкові баланси
+        foreach (var account in accounts)
         {
-            acc.DisplayInfo();
-            acc.Deposit(200);
-            acc.Withdraw(400);
-            acc.DisplayInfo();
-            Console.WriteLine();
+            account.Display();
         }
+        Console.WriteLine();
 
-        SavingsAccount savings = new SavingsAccount("Marta", 2000, 0.1m);
-        savings.ApplyInterest();
+        // Робимо операції депозита
+        accounts[0].Deposit(200m);
+        accounts[1].Deposit(200m);
+        accounts[2].Deposit(200m);
+        Console.WriteLine();
+
+        // Робимо операції зняття коштів
+        accounts[0].Withdraw(400m);
+        accounts[1].Withdraw(400m);
+        accounts[2].Withdraw(400m);
+        Console.WriteLine();
+
+        // Виводимо баланси після операцій
+        foreach (var account in accounts)
+        {
+            account.Display();
+        }
+        Console.WriteLine();
+
+        // Демонструємо додатковий метод нарахування відсотків у SavingsAccount
+        if (accounts[1] is SavingsAccount savingsAccount)
+        {
+            savingsAccount.ApplyInterest();
+        }
     }
 }
