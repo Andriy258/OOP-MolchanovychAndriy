@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\Desktop\\Andriy\\OOP-MolchanovychAndriy\\lab5v9\\lab5v9\\lab5v9\\lab5v9.csproj",
-      "projectName": "lab5v9",
-      "projectPath": "C:\\Users\\User\\Desktop\\Andriy\\OOP-MolchanovychAndriy\\lab5v9\\lab5v9\\lab5v9\\lab5v9.csproj",
+      "projectUniqueName": "C:\\Users\\User\\Desktop\\Andriy\\OOP-MolchanovychAndriy\\OOP-MolchanovychAndriy.csproj",
+      "projectName": "OOP-MolchanovychAndriy",
+      "projectPath": "C:\\Users\\User\\Desktop\\Andriy\\OOP-MolchanovychAndriy\\OOP-MolchanovychAndriy.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\Desktop\\Andriy\\OOP-MolchanovychAndriy\\lab5v9\\lab5v9\\lab5v9\\obj\\",
+      "outputPath": "C:\\Users\\User\\Desktop\\Andriy\\OOP-MolchanovychAndriy\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
