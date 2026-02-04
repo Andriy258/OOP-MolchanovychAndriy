@@ -1,0 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace lab20
+{
+   public interface IOrderValidator
+{
+    bool IsValid(Order order);
+}
+}
